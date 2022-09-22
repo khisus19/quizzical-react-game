@@ -13,6 +13,7 @@ function App() {
   const [questionsSet, setQuestionsSet] = useState([])
   const [selectedAnswers, setSelectedAnswers] = useState([])
   const [showAnswer, setShowAnswers] = useState(false)
+  let result = 0
 
   
   // useEffect(() => {
@@ -27,7 +28,7 @@ function App() {
       return setQuestionsSet(pregunta)
     })
     console.log(questionsSet)
-  }, [count])
+  }, [])
 
   // useEffect(() => {
   //   setQuestionsSet(questionsReceived.map(item => {
@@ -69,6 +70,17 @@ function App() {
     const compared = allCorrect.length === allSelected.length && allCorrect.every((item, index) => item === allSelected[index])
     console.log(allCorrect, allSelected);
     console.log(compared ? "Acertaste" : "Equivocaste")
+    tallyResults()
+  }
+
+  function tallyResults() {
+    const allCorrect = questionsSet.map(item => item.correct_answer)
+    const allSelected = questionsSet.map(item => item.selected_answer)
+    allCorrect.map((item, index) => {
+      if(item === allSelected[index]) {
+        setCount(prev => prev + 1)
+      }
+    })
   }
 
   const questionsElements = questionsSet.map(item => {
@@ -83,10 +95,21 @@ function App() {
       show_answer={showAnswer}
     />
   })
+
+  function newGame() {
+    setShowAnswers(false)
+  }
+
   return (
     <div className="App">
       {questionsElements}
-      <button className="btn" onClick={checkAnswers}>Check my answers</button>
+      {showAnswer ? 
+        <>
+          <p>{`You have ${count} correct answers`}</p>
+          <button className="btn" onClick={newGame}>Try Again</button> 
+        </>
+        : <button className="btn" onClick={checkAnswers}>Check my answers</button> 
+      }
     </div>
   )
 }
