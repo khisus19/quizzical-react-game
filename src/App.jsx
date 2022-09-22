@@ -11,7 +11,7 @@ function App() {
   const [questionsReceived, setQuestionsReceived] = useState(hardCodedQuestions)
   const [questionsSet, setQuestionsSet] = useState([])
   const [selectedAnswers, setSelectedAnswers] = useState([])
-  const allSelected = questionsSet.map(item => item.selected_answer)
+  const [showAnswer, setShowAnswers] = useState(false)
 
   
   useEffect(() => {
@@ -37,7 +37,7 @@ function App() {
           .map(item => decodeHtml(item))
           .sort(() => Math.random() - 0.5),
         selected_answer: "",
-        show_answer: false
+        show_answer: showAnswer
       }
     }))
   }, [questionsReceived])
@@ -61,6 +61,7 @@ function App() {
   }
 
   function checkAnswers() {
+    setShowAnswers(prev => !prev)
     const allCorrect = questionsSet.map(item => item.correct_answer)
     const allSelected = questionsSet.map(item => item.selected_answer)
     const compared = allCorrect.length === allSelected.length && allCorrect.every((item, index) => item === allSelected[index])
@@ -77,13 +78,13 @@ function App() {
       correct_answer={item.correct_answer}
       handleSelected={handleSelected}
       selected_answer={item.selected_answer}
-      showAnswer={item.show_answer}
+      show_answer={item.show_answer}
     />
   })
   return (
     <div className="App">
       {questionsElements}
-      {allSelected.length === 2 && <button className="btn" onClick={checkAnswers}>Check my answers</button>}
+      <button className="btn" onClick={checkAnswers}>Check my answers</button>
     </div>
   )
 }

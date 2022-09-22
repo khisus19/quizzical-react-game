@@ -44,7 +44,7 @@ body {
   flex-wrap: wrap;
   justify-content: center;
 }
-.option {
+.option, .selected, .correct {
   margin: 10px;
   padding: 5px 15px;
   list-style: none;
@@ -57,6 +57,12 @@ body {
 }
 .selected {
   background-color: var(--medium-grey);
+}
+.correct {
+  background-color: var(--green);
+}
+.incorrect {
+  background-color: rgb(255, 139, 139);
 }
 .horizontal-r {
   margin-bottom: 15px;
