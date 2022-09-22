@@ -4,49 +4,51 @@ import './App.css'
 import hardCodedQuestions from "../data"
 import Question from "./components/Question"
 import FetchToken from "./helpers/FetchToken"
+import FetchQuestions from "./helpers/FetchQuestions"
 
 function App() {
   const [count, setCount] = useState(0)
   const [token, setToken] = useState("")
-  const [questionsReceived, setQuestionsReceived] = useState(hardCodedQuestions)
+  const [questionsReceived, setQuestionsReceived] = useState([])
   const [questionsSet, setQuestionsSet] = useState([])
   const [selectedAnswers, setSelectedAnswers] = useState([])
   const [showAnswer, setShowAnswers] = useState(false)
 
   
-  useEffect(() => {
-    setToken(FetchToken())
-    /* fetch("https://opentdb.com/api_token.php?command=request")
-      .then(res => res.json())
-      .then(data => setToken(data.token)) */ 
-  }, [])
+  // useEffect(() => {
+  //   setToken(FetchToken())
+  //   /* fetch("https://opentdb.com/api_token.php?command=request")
+  //     .then(res => res.json())
+  //     .then(data => setToken(data.token)) */ 
+  // }, [])
 
   useEffect(() => {
-    fetch(`https://opentdb.com/api.php?amount=2&category=9&difficulty=easy&type=multiple&token=${token}`)
-      .then(res => res.json())
-      .then(data => setQuestionsReceived(data.results))
+    FetchQuestions(showAnswer).then(pregunta => {
+      return setQuestionsSet(pregunta)
+    })
+    console.log(questionsSet)
   }, [count])
 
-  useEffect(() => {
-    setQuestionsSet(questionsReceived.map(item => {
-      return {
-        id: nanoid(),
-        question: decodeHtml(item.question),
-        correct_answer: decodeHtml(item.correct_answer),
-        posible_answers: [...item.incorrect_answers, item.correct_answer]
-          .map(item => decodeHtml(item))
-          .sort(() => Math.random() - 0.5),
-        selected_answer: "",
-        show_answer: showAnswer
-      }
-    }))
-  }, [questionsReceived])
+  // useEffect(() => {
+  //   setQuestionsSet(questionsReceived.map(item => {
+  //     return {
+  //       id: nanoid(),
+  //       question: decodeHtml(item.question),
+  //       correct_answer: decodeHtml(item.correct_answer),
+  //       posible_answers: [...item.incorrect_answers, item.correct_answer]
+  //         .map(item => decodeHtml(item))
+  //         .sort(() => Math.random() - 0.5),
+  //       selected_answer: "",
+  //       show_answer: showAnswer
+  //     }
+  //   }))
+  // }, [questionsReceived, showAnswer])
 
-  function decodeHtml(html) {
-    let txt = document.createElement("textarea");
-    txt.innerHTML = html;
-    return txt.value;
-  }
+  // function decodeHtml(html) {
+  //   let txt = document.createElement("textarea");
+  //   txt.innerHTML = html;
+  //   return txt.value;
+  // }
   
 
   function handleSelected(questionId, answer) {
@@ -78,7 +80,7 @@ function App() {
       correct_answer={item.correct_answer}
       handleSelected={handleSelected}
       selected_answer={item.selected_answer}
-      show_answer={item.show_answer}
+      show_answer={showAnswer}
     />
   })
   return (

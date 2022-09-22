@@ -3,15 +3,19 @@ import { nanoid } from "nanoid"
 export default function Question(props) {
 
   const shuffleOptions = props.posible_answers.map(option => {
-    let conditionalClass = ""
+    let conditionalStyle = ""
     if(!props.show_answer) {
-      conditionalClass = option !== "" && (props.selected_answer === option) ? "selected" : "option"
+      conditionalStyle = option !== "" && (props.selected_answer === option) ? "selected" : "option"
+    } else if (props.show_answer && props.correct_answer === option) {
+      conditionalStyle = "correct"
+    } else if (props.show_answer && (props.selected_answer === option) && props.selected_answer !== props.correct_answer) {
+      conditionalStyle = "incorrect"
     } else {
-      conditionalClass = (props.selected_answer === option) && (option === props.correct_answer) ? "correct" : "option"
+      conditionalStyle = "option"
     }
     return <span 
       key={nanoid()}
-			className={conditionalClass}
+			className={conditionalStyle}
 			onClick={() => props.handleSelected(props.id, option)}
       >{option}</span>
   })
