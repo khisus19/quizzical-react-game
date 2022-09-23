@@ -1,7 +1,5 @@
-import FetchToken from "./FetchToken"
 import { nanoid } from "nanoid";
 
-const token = FetchToken()
 
 function decodeHtml(html) {
   let txt = document.createElement("textarea");
@@ -9,9 +7,16 @@ function decodeHtml(html) {
   return txt.value;
 }
 
+function FetchToken() {
+  fetch("https://opentdb.com/api_token.php?command=request")
+  .then(res => res.json())
+  .then(data => data.token)
+}
+
+const token = FetchToken()
 
 export default function FetchQuestions(showAnswer) {
-  return fetch(`https://opentdb.com/api.php?amount=2&category=9&difficulty=easy&type=multiple`)
+  return fetch(`https://opentdb.com/api.php?amount=5&category=9&difficulty=easy&type=multiple&${token}`)
       .then(res => res.json())
       .then(data => data.results.map(item => {
         return {

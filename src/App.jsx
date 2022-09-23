@@ -1,56 +1,20 @@
 import { useState, useEffect } from 'react'
-import { nanoid } from 'nanoid'
 import './App.css'
-import hardCodedQuestions from "../data"
 import Question from "./components/Question"
-import FetchToken from "./helpers/FetchToken"
 import FetchQuestions from "./helpers/FetchQuestions"
+import TallyResults from "./helpers/TallyResults"
 
 function App() {
-  const [count, setCount] = useState(0)
-  const [token, setToken] = useState("")
-  const [questionsReceived, setQuestionsReceived] = useState([])
+  const [result, setResult] = useState(0)
+  const [games, setGames] = useState(0)
   const [questionsSet, setQuestionsSet] = useState([])
-  const [selectedAnswers, setSelectedAnswers] = useState([])
   const [showAnswer, setShowAnswers] = useState(false)
-  let result = 0
-
-  
-  // useEffect(() => {
-  //   setToken(FetchToken())
-  //   /* fetch("https://opentdb.com/api_token.php?command=request")
-  //     .then(res => res.json())
-  //     .then(data => setToken(data.token)) */ 
-  // }, [])
 
   useEffect(() => {
     FetchQuestions(showAnswer).then(pregunta => {
       return setQuestionsSet(pregunta)
     })
-    console.log(questionsSet)
-  }, [])
-
-  // useEffect(() => {
-  //   setQuestionsSet(questionsReceived.map(item => {
-  //     return {
-  //       id: nanoid(),
-  //       question: decodeHtml(item.question),
-  //       correct_answer: decodeHtml(item.correct_answer),
-  //       posible_answers: [...item.incorrect_answers, item.correct_answer]
-  //         .map(item => decodeHtml(item))
-  //         .sort(() => Math.random() - 0.5),
-  //       selected_answer: "",
-  //       show_answer: showAnswer
-  //     }
-  //   }))
-  // }, [questionsReceived, showAnswer])
-
-  // function decodeHtml(html) {
-  //   let txt = document.createElement("textarea");
-  //   txt.innerHTML = html;
-  //   return txt.value;
-  // }
-  
+  }, [games])
 
   function handleSelected(questionId, answer) {
     setQuestionsSet(prevQuestionsSet => (
@@ -60,29 +24,23 @@ function App() {
           : question
       ))
     ));
-    setSelectedAnswers(questionsSet.map(item => item.selected_answer))
   }
 
   function checkAnswers() {
     setShowAnswers(prev => !prev)
-    const allCorrect = questionsSet.map(item => item.correct_answer)
     const allSelected = questionsSet.map(item => item.selected_answer)
-    const compared = allCorrect.length === allSelected.length && allCorrect.every((item, index) => item === allSelected[index])
+    const allCorrect = questionsSet.map(item => item.correct_answer)
     console.log(allCorrect, allSelected);
-    console.log(compared ? "Acertaste" : "Equivocaste")
-    tallyResults()
+    setResult(TallyResults(allSelected, allCorrect))
   }
 
-  function tallyResults() {
-    const allCorrect = questionsSet.map(item => item.correct_answer)
-    const allSelected = questionsSet.map(item => item.selected_answer)
-    allCorrect.map((item, index) => {
-      if(item === allSelected[index]) {
-        setCount(prev => prev + 1)
-      }
-    })
+  function newGame() {
+    window.scrollTo(0, 0);
+    setGames(prev => prev + 1)
+    setShowAnswers(false)
+    setResult(0)
   }
-
+  
   const questionsElements = questionsSet.map(item => {
     return <Question 
       key={item.id}
@@ -96,17 +54,13 @@ function App() {
     />
   })
 
-  function newGame() {
-    setShowAnswers(false)
-  }
-
   return (
     <div className="App">
       {questionsElements}
       {showAnswer ? 
         <>
-          <p>{`You have ${count} correct answers`}</p>
-          <button className="btn" onClick={newGame}>Try Again</button> 
+          <h2 className="message">{`You have ${result} correct answers out of 5`}</h2>
+          <button className="btn reset" onClick={newGame}>Try Again</button> 
         </>
         : <button className="btn" onClick={checkAnswers}>Check my answers</button> 
       }
