@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import Question from "./components/Question"
+import TallyButton from "./components/TallyButton"
 import FetchQuestions from "./helpers/FetchQuestions"
 import TallyResults from "./helpers/TallyResults"
 
@@ -62,7 +63,11 @@ function App() {
           <h2 className="message">{`You have ${result} correct answers out of 5`}</h2>
           <button className="btn reset" onClick={newGame}>Try Again</button> 
         </>
-        : <button className="btn" onClick={checkAnswers}>Check my answers</button> 
+        : <TallyButton 
+          questions={questionsSet}
+          checkAnswers={checkAnswers}
+        />
+        // <button className="btn" onClick={checkAnswers}>Check my answers</button> 
       }
     </div>
   )

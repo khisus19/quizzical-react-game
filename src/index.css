@@ -6,14 +6,18 @@
 :root {
   --black: #1C1C1C;
   --dark-blue: #1F2937;
-  --green: #55F991;
-  --main-btn: #10B981;
-  --soft-green: #ECFDF5;
+  --main: #55F991;
+  --main-btn: #44C774;
+  --main-btn-pressed: #60da8d;
+  --main-soft: #ECFDF5;
   --medium-grey: #D5D4D8;
   --dark-grey: #2F3E53;
   --white: #ffffff;
-  --pale-blue: #30C7BD;
+  --secondary: #30C7BD;
+  --secondary-pale: #53e0d7;
   --grey-blue: #6D9491;
+  --warning: #FF8B8B;
+  --btn-shadow: 0px 1px 3px 1px rgba(199, 199, 199, 0.8);
 }
 body {
  font-size: 62.5%;
@@ -32,7 +36,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  background-color: var(--soft-green);
+  background-color: var(--main-soft);
   border-radius: 8px;
 }
 .question {
@@ -54,22 +58,23 @@ body {
   border: 1px solid var(--grey-blue);
   border-radius: 8px;
   text-align: center;
+  cursor: pointer;
 }
 .selected {
   background-color: var(--medium-grey);
 }
 .correct {
-  background-color: var(--green);
+  background-color: var(--main);
 }
 .incorrect {
-  background-color: rgb(255, 139, 139);
+  background-color: var(--warning);
 }
 .horizontal-r {
   margin-bottom: 15px;
   width: 100%;
   border: 1px solid var(--medium-grey);
 }
-.btn {
+.btn, .disabled-btn {
   margin: 15px;
   padding: 10px 20px;
   font-family: 'Inter', sans-serif;
@@ -79,14 +84,27 @@ body {
   border: none;
   box-shadow: 3px 3px 5px 1px rgba(124, 124, 124, 0.5);
   border-radius: 5px;
-}
-.reset {
-  background-color: var(--pale-blue);
+  cursor: pointer;
 }
 .btn:active {
-  background-color: var(--pale-blue);
-  box-shadow: 1px 1px 5px 1px rgba(199, 199, 199, 0.8);
+  background-color: var(--main-btn-pressed);
+  box-shadow: none;
 }
+.disabled-btn, .disabled-btn:active {
+  background-color: var(--main-btn);
+  opacity: 0.3;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.reset {
+  background-color: var(--secondary);
+}
+.reset:active {
+  background-color: var(--secondary-pale);
+}
+
 .message {
   font-size: 1.6rem;
+  text-align: center;
 }
