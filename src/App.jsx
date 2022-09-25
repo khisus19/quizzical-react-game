@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import './App.css'
 import Question from "./components/Question"
 import TallyButton from "./components/TallyButton"
+import FetchCategories from "./helpers/FetchCategories"
 import FetchQuestions from "./helpers/FetchQuestions"
 import TallyResults from "./helpers/TallyResults"
 
@@ -10,10 +11,18 @@ function App() {
   const [games, setGames] = useState(0)
   const [questionsSet, setQuestionsSet] = useState([])
   const [showAnswer, setShowAnswers] = useState(false)
+  const [categories, setCategories] = useState([])
+  const [gameOptions, setGameOptions] = useState({
+    category: "",
+    difficulty: ""
+  })
 
   useEffect(() => {
     FetchQuestions(showAnswer).then(pregunta => {
       return setQuestionsSet(pregunta)
+    })
+    FetchCategories().then(category => {
+      return setCategories(category)
     })
   }, [games])
 
@@ -41,6 +50,17 @@ function App() {
     setShowAnswers(false)
     setResult(0)
   }
+
+  function handleGameOptions(event) {
+    const { name, value } = event.target
+    setGameOptions(prev => {
+      return {
+        ...prev,
+        [name]: value
+      }
+    })
+    console.log(gameOptions);
+  }
   
   const questionsElements = questionsSet.map(item => {
     return <Question 
@@ -55,9 +75,39 @@ function App() {
     />
   })
 
+  const categoriesElements = categories.map(item => {
+    return <option
+      key={item.id}
+      id={item.id}
+      name={item.name}
+      value={item.id}
+      >
+    {item.name}
+    </option>
+  })
+
   return (
     <div className="App">
       {questionsElements}
+      {<select
+        value={gameOptions.category}
+        onChange={handleGameOptions}
+        name="category"
+      >
+        <option 
+        value={0}>Any Category</option>
+        {categoriesElements}
+      </select>}
+      {<select
+        value={gameOptions.difficulty}
+        onChange={handleGameOptions}
+        name="difficulty"
+      >
+        <option>Any difficulty</option>
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+      </select>}
       {showAnswer ? 
         <>
           <h2 className="message">{`You have ${result} correct answers out of 5`}</h2>
