@@ -10,7 +10,8 @@ function App() {
   const [questionsSet, setQuestionsSet] = useState([])
   const [gameOptions, setGameOptions] = useState({
     category: 0,
-    difficulty: 0
+    difficulty: 0,
+    type: 0,
   })
 
   useEffect(() => {
@@ -55,40 +56,44 @@ function App() {
         gameOptions={gameOptions}
         questionsSet={questionsSet}
         setQuestionsSet={setQuestionsSet}
-        setIsGameTime={setIsGameTime}/> :
+        setIsGameTime={setIsGameTime}/> 
+        :
         <>
-        <h2 className="message">Quizzical</h2>
-        <select
-          value={gameOptions.category}
-          onChange={handleGameOptions}
-          name="category"
-        >
-          <option 
-          value={0}>Any Category</option>
-          {categoriesElements}
-        </select>
-        <select
-          value={gameOptions.difficulty}
-          onChange={handleGameOptions}
-          name="difficulty"
-        >
-          <option value={0}>Any difficulty</option>
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
-        </select>
-        <select
-          value={gameOptions.type}
-          onChange={handleGameOptions}
-          name="type"
-        >
-          <option value={0}>Any type</option>
-          <option value="multiple">Multiple Choice</option>
-          <option value="boolean">True or False</option>
-        </select>
-        <button className="btn reset" onClick={() => setIsGameTime(prev => !prev)
+        <h1 className="title">Quizzical</h1>
+        <p className="subtitle">Have some trivia fun!</p>
+        <form className="form">
+          <label className="dropdown-label">Choose a Category:</label>
+          <select
+            value={gameOptions.category}
+            onChange={handleGameOptions}
+            name="category">
+            <option 
+            value={0}>Any Category</option>
+            {categoriesElements}
+          </select>
+          <label className="dropdown-label">Choose a Difficulty:</label>
+          <select
+            value={gameOptions.difficulty}
+            onChange={handleGameOptions}
+            name="difficulty">
+            <option value={0}>Any difficulty</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+          <label className="dropdown-label">Choose a Type of Question:</label>
+          <select
+            value={gameOptions.type}
+            onChange={handleGameOptions}
+            name="type">
+            <option value={0}>Any type</option>
+            <option value="multiple">Multiple Choice</option>
+            <option value="boolean">True or False</option>
+          </select>
+        </form>
+        <button className="btn" onClick={() => setIsGameTime(prev => !prev)
           }>Start Game</button> 
-        </>
+      </>
 
       }  
     </div>

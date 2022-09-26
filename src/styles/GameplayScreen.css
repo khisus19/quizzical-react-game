@@ -1,0 +1,83 @@
+.gameplay-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.question {
+  font-size: 1.6rem;
+}
+.options-container {
+  margin-bottom: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.option, .selected, .correct, .incorrect {
+  margin: 10px;
+  padding: 5px 15px;
+  list-style: none;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  font-size: 1.2rem;
+  border: 1px solid var(--grey-blue);
+  border-radius: 8px;
+  text-align: center;
+  cursor: pointer;
+}
+.selected {
+  background-color: var(--medium-grey);
+}
+.correct {
+  background-color: var(--main);
+}
+.incorrect {
+  background-color: var(--warning);
+}
+.horizontal-r {
+  margin-bottom: 15px;
+  width: 100%;
+  border: 1px solid var(--medium-grey);
+}
+.btn-container {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.btn, .disabled-btn {
+  width: 200px;
+  margin: 15px;
+  padding: 10px 20px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  color: var(--white);
+  background-color: var(--main-btn);
+  border: none;
+  box-shadow: 3px 3px 5px 1px rgba(124, 124, 124, 0.5);
+  border-radius: 5px;
+  cursor: pointer;
+}
+.btn:active {
+  background-color: var(--main-btn-pressed);
+  box-shadow: none;
+}
+.disabled-btn, .disabled-btn:active {
+  background-color: var(--main-btn);
+  opacity: 0.3;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+.btn:hover:not(.disabled-btn) {
+  opacity: 0.8;
+}
+.reset {
+  background-color: var(--secondary);
+}
+.reset:active {
+  background-color: var(--secondary-pale);
+}
+
+.message {
+  font-size: 1.6rem;
+  text-align: center;
+}

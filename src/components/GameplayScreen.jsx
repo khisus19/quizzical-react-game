@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import '../App.css'
+import '../styles/GameplayScreen.css'
 import Question from "./Question"
 import TallyButton from "./TallyButton"
 import FetchCategories from "../helpers/FetchCategories"
@@ -68,17 +69,20 @@ export default function GameplayScreen(props) {
       {showAnswer ? 
         <>
           <h2 className="message">{`You have ${result} correct answers out of 5`}</h2>
-          <button className="btn" onClick={continuePlaying}>Play Again</button>
-          <button className="btn reset" onClick={newGame}>Start a New Game</button>
+          <div className="btn-container">
+            <button className="btn" onClick={continuePlaying}>Play Again</button>
+            <button className="btn reset" onClick={newGame}>Start a New Game</button>
+          </div>
         </>
         
         : 
-        <>
+        <div className="btn-container">
           <TallyButton 
             questions={props.questionsSet}
             checkAnswers={checkAnswers}
           />
-        </>
+          <button className="btn reset" onClick={newGame}>Start a New Game</button>
+        </div>
       }
     </div>
   )
