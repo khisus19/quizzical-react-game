@@ -35,7 +35,6 @@ function App() {
         [name]: value
       }
     })
-    console.log(gameOptions);
   }
   
   const categoriesElements = categories.map(item => {

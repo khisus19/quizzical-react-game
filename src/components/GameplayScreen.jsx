@@ -33,7 +33,6 @@ export default function GameplayScreen(props) {
     setShowAnswers(prev => !prev)
     const allSelected = props.questionsSet.map(item => item.selected_answer)
     const allCorrect = props.questionsSet.map(item => item.correct_answer)
-    console.log(allCorrect, allSelected);
     setResult(TallyResults(allSelected, allCorrect))
   }
 
@@ -67,7 +66,7 @@ export default function GameplayScreen(props) {
       {questionsElements}
       {showAnswer ? 
         <>
-          <h2 className="message">{`You have ${result} correct answers out of 5`}</h2>
+          <h2 className="message">{`You have ${result} correct answers out of ${props.gameOptions.num_questions}`}</h2>
           <div className="btn-container">
             <button className="btn" onClick={continuePlaying}>Play Again</button>
             <button className="btn reset" onClick={newGame}>Start a New Game</button>
