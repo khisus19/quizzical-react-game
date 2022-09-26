@@ -16,10 +16,9 @@ function FetchToken() {
 const token = FetchToken()
 
 export default function FetchQuestions(showAnswer, gameOptions) {
-  const { category, difficulty, type } = gameOptions
+  const { category, difficulty, type, num_questions } = gameOptions
 
-  let url = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=${type}`
-  console.log(url);
+  let url = `https://opentdb.com/api.php?amount=${num_questions}&category=${category}&difficulty=${difficulty}&type=${type}`
 
   return fetch(url)
       .then(res => res.json())

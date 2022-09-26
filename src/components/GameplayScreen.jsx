@@ -17,7 +17,6 @@ export default function GameplayScreen(props) {
     FetchQuestions(false, props.gameOptions).then(pregunta => {
       return props.setQuestionsSet(pregunta)
     })
-    console.log(props.questionsSet)
   }, [games])
 
   function handleSelected(questionId, answer) {

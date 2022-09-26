@@ -27,13 +27,18 @@
   display: flex;
   flex-direction: column;
 }
-.dropdown-label {
+.label {
   display: block;
   font-size: 1.2rem;
 }
-select {
+select, input {
   margin: 5px auto 25px;
   width: 100%;
   padding: 5px 8px;
   font-size: 1.2rem;
+}
+input {
+  background-color: #e9e9ed;
+  border: 1px solid #8f8f9d;
+  border-radius: 5px;
 }

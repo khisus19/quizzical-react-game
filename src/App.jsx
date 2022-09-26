@@ -12,6 +12,7 @@ function App() {
     category: 0,
     difficulty: 0,
     type: 0,
+    num_questions: 5
   })
 
   useEffect(() => {
@@ -24,7 +25,6 @@ function App() {
     FetchQuestions(false, gameOptions).then(pregunta => {
       return setQuestionsSet(pregunta)
     })
-    console.log(questionsSet)
   }, [gameOptions])
 
   function handleGameOptions(event) {
@@ -62,7 +62,15 @@ function App() {
         <h1 className="title">Quizzical</h1>
         <p className="subtitle">Have some trivia fun!</p>
         <form className="form">
-          <label className="dropdown-label">Choose a Category:</label>
+          <label className="label">Number of Questions:</label>
+          <input 
+          name="num_questions"
+          onChange={handleGameOptions}
+          value={gameOptions.num_questions}
+          type="number"
+          min={5} 
+          max={15} />
+          <label className="label">Choose a Category:</label>
           <select
             value={gameOptions.category}
             onChange={handleGameOptions}
@@ -71,7 +79,7 @@ function App() {
             value={0}>Any Category</option>
             {categoriesElements}
           </select>
-          <label className="dropdown-label">Choose a Difficulty:</label>
+          <label className="label">Choose a Difficulty:</label>
           <select
             value={gameOptions.difficulty}
             onChange={handleGameOptions}
@@ -81,7 +89,7 @@ function App() {
             <option value="medium">Medium</option>
             <option value="hard">Hard</option>
           </select>
-          <label className="dropdown-label">Choose a Type of Question:</label>
+          <label className="label">Choose a Type of Question:</label>
           <select
             value={gameOptions.type}
             onChange={handleGameOptions}
