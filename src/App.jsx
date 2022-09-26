@@ -77,6 +77,15 @@ function App() {
           <option value="medium">Medium</option>
           <option value="hard">Hard</option>
         </select>
+        <select
+          value={gameOptions.type}
+          onChange={handleGameOptions}
+          name="type"
+        >
+          <option value={0}>Any type</option>
+          <option value="multiple">Multiple Choice</option>
+          <option value="boolean">True or False</option>
+        </select>
         <button className="btn reset" onClick={() => setIsGameTime(prev => !prev)
           }>Start Game</button> 
         </>
